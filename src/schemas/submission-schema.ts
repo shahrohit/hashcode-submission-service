@@ -1,18 +1,23 @@
 import { z } from "zod";
 
 export const submissionSchema = z.object({
-  language: z.string().min(1, "Required"),
-  code: z.string().min(1, "Required"),
-  testcases: z
-    .array(
-      z.object({
-        input: z.string().min(1, "input is Required"),
-        output: z.string().min(1, "output is Required"),
-      }),
-    )
-    .nonempty({ message: "Testcase is Required" }),
-  time: z.number().positive("Invalid Time Limit"),
+  id: z.string().nullable(),
+  problem: z.string().min(1, "Problem is Required"),
+  language: z.string().min(1, "Language is Required"),
+  code: z.string().min(1, "Code is Required Required"),
+  timestamp: z.string(),
 });
 
 export default submissionSchema;
-export type TSubmissionJob = z.infer<typeof submissionSchema>;
+
+export type Testcase = { input: string; output: string };
+export type TSubmission = z.infer<typeof submissionSchema>;
+
+export type TSubmissionJob = {
+  id: string | null;
+  language: string;
+  code: string;
+  testcases: Testcase[];
+  timeLimit: number;
+  timestamp: string;
+};

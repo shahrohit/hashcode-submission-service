@@ -7,11 +7,11 @@ import { StatusCodes } from "http-status-codes";
 
 import submissionService from "@services/submission-service";
 import { CREATED } from "@/utils/strings";
-import { TSubmissionJob } from "@/schemas/submission-schema";
+import { TSubmission } from "@/schemas/submission-schema";
 
 const createSubmission = async (req: Req, res: Res, next: NextFn) => {
   try {
-    const body = req.body as TSubmissionJob;
+    const body = req.body as TSubmission;
 
     await submissionService.createSubmission(body);
 

@@ -7,9 +7,11 @@ export type TExecutionStatus =
   | "RTE";
 
 export type TExecutionJob = {
+  id: string;
   input?: string;
   output?: string;
   executionOutput: string;
   status: TExecutionStatus;
   acceptedCount?: number;
+  timestamp: string;
 };

@@ -6,7 +6,7 @@ import express from "express";
 const submissionRouter = express.Router();
 
 submissionRouter
-  .route("/")
+  .route("/submit")
   .post(validate(submissionSchema), submissionController.createSubmission);
 
 export default submissionRouter;
