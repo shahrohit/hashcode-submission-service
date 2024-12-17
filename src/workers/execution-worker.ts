@@ -1,7 +1,7 @@
-import executionService from "@/services/execution-service";
-import { TExecutionJob } from "@utils/global-types";
+import executionService from "@services/execution-service";
+import { ExecutionConsumer } from "@utils/global-types";
 
-const executionWorker = async (data: TExecutionJob) => {
+const executionWorker = async (data: ExecutionConsumer) => {
   await executionService.pushExecutionResult(data);
 };
 

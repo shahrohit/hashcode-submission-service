@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 
-import { DEV_ENV } from "@utils/strings";
+import { DEV_ENV } from "@utils/constants";
 
 dotenv.config();
 

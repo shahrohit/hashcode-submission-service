@@ -1,8 +1,8 @@
-import { channel } from "@/config/queue-config";
-import { TSubmissionJob } from "@/schemas/submission-schema";
-import { SUBMISSION_QUEUE } from "@/utils/strings";
+import { channel } from "@config/queue-config";
+import { SubmissionProducer } from "@utils/global-types";
+import { SUBMISSION_QUEUE } from "@utils/constants";
 
-const submissionProducer = (message: TSubmissionJob) => {
+const submissionProducer = (message: SubmissionProducer) => {
   try {
     if (!channel) throw new Error("RabbitMQ channel not initialized");
     channel.sendToQueue(SUBMISSION_QUEUE, Buffer.from(JSON.stringify(message)));

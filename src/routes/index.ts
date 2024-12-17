@@ -1,5 +1,6 @@
 import express from "express";
-import submissionRouter from "./submission-route";
+
+import submissionRouter from "@routes/submission-route";
 
 const apiRouter = express.Router();
 

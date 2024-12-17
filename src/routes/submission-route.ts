@@ -1,12 +1,19 @@
-import submissionController from "@/controller/submission-controller";
-import submissionSchema from "@/schemas/submission-schema";
-import validate from "@/validations/zod-validator";
 import express from "express";
+
+import validate from "@validations/zod-validator";
+import runTestcaseSchema from "@schemas/runtestcase-schema";
+import submitSchema from "@schemas/submit-schema";
+
+import submissionController from "@controller/submission-controller";
 
 const submissionRouter = express.Router();
 
 submissionRouter
   .route("/submit")
-  .post(validate(submissionSchema), submissionController.createSubmission);
+  .post(validate(submitSchema), submissionController.createSubmit);
+
+submissionRouter
+  .route("/run")
+  .post(validate(runTestcaseSchema), submissionController.createRunTestcase);
 
 export default submissionRouter;

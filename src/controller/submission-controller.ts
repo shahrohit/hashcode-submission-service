@@ -5,15 +5,34 @@ import {
 } from "express";
 import { StatusCodes } from "http-status-codes";
 
+import { TSubmit } from "@schemas/submit-schema";
+import { TRunTestcase } from "@schemas/runtestcase-schema";
+
 import submissionService from "@services/submission-service";
-import { CREATED } from "@/utils/strings";
-import { TSubmission } from "@/schemas/submission-schema";
+import { CREATED } from "@utils/constants";
 
-const createSubmission = async (req: Req, res: Res, next: NextFn) => {
+const createSubmit = async (req: Req, res: Res, next: NextFn) => {
   try {
-    const body = req.body as TSubmission;
+    const body = req.body as TSubmit;
 
-    await submissionService.createSubmission(body);
+    await submissionService.createSubmit(body);
+
+    res.status(StatusCodes.CREATED).json({
+      succcess: true,
+      statusCode: StatusCodes.CREATED,
+      message: CREATED,
+      data: {},
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const createRunTestcase = async (req: Req, res: Res, next: NextFn) => {
+  try {
+    const body = req.body as TRunTestcase;
+
+    await submissionService.createRunTestcase(body);
 
     res.status(StatusCodes.CREATED).json({
       succcess: true,
@@ -27,7 +46,8 @@ const createSubmission = async (req: Req, res: Res, next: NextFn) => {
 };
 
 const submissionController = {
-  createSubmission,
+  createSubmit,
+  createRunTestcase,
 };
 
 export default submissionController;

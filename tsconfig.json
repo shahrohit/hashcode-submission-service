@@ -21,9 +21,11 @@
       "@config/*": ["./src/config/*"],
       "@routes/*": ["./src/routes/*"],
       "@services/*": ["./src/services/*"],
+      "@validations/*": ["./src/validations/*"],
       "@repositories/*": ["./src/repositories/*"],
       "@utils/*": ["./src/utils/*"],
-      "@validations/*": ["./src/validations/*"],
+      "@workers/*": ["./src/workers/*"],
+      "@producers/*": ["./src/producers/*"],
       "@schemas/*": ["./src/schemas/*"],
       "@middlewares/*": ["./src/middlewares/*"]
     }

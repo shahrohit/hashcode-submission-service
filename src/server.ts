@@ -1,10 +1,11 @@
 import express from "express";
 import bodyParser from "body-parser";
 
-import apiRouter from "@routes/index";
-import errorHandler from "@middlewares/errorHandler";
 import { PORT } from "@config/server-config";
 import connectQueue from "@config/queue-config";
+
+import apiRouter from "@routes/index";
+import errorHandler from "@middlewares/error-handler";
 
 const app = express();
 

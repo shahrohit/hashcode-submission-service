@@ -1,35 +1,71 @@
-import { ADMIN_SERVICE_URL } from "@/config/server-config";
-import fetchData from "@/controller/request-controller";
-import submissionProducer from "@/producer/submission-producer";
-import { Testcase, TSubmission } from "@/schemas/submission-schema";
-import { NotFound } from "@/utils/errors";
+import { ADMIN_SERVICE_URL } from "@config/server-config";
+import fetchData from "@controller/request-controller";
+import submissionProducer from "@producers/submission-producer";
+import { TRunTestcase } from "@schemas/runtestcase-schema";
+import { TSubmit } from "@schemas/submit-schema";
+import { NotFound } from "@utils/errors";
+import { TProblemRun, TProblemSubmit } from "@utils/global-types";
+import { USER_CODE } from "@utils/constants";
 
-const createSubmission = async (data: TSubmission) => {
-  console.log(data);
-  const problem = await fetchData(
+const createSubmit = async (data: TSubmit) => {
+  const problem = (await fetchData(
     ADMIN_SERVICE_URL,
     `/api/submissions/problems/submit/${data.problem}/${data.language}`,
-  );
+  )) as TProblemSubmit;
   if (!problem) throw new NotFound("Problem Not Found");
 
-  if (problem?.code) {
-    problem.code = problem.code?.replace("%user%", data.code);
+  if (problem.code) {
+    problem.code = problem.code?.replace(USER_CODE, data.code);
   }
 
   submissionProducer({
-    id: data.id,
-    code: problem.code as string,
-    language: problem.language as string,
-    testcases: problem.testcases as Testcase[],
-    timeLimit: problem.timeLimit as number,
+    type: data.type,
+    username: data.username,
+    problemId: problem.id,
+    problemSlug: data.problem,
+    socketKey: data.socketKey,
+    code: problem.code,
+    language: problem.language,
+    testcases: problem.testcases,
+    timeLimit: problem.timeLimit,
     timestamp: data.timestamp,
   });
+};
 
-  console.log(problem);
+const createRunTestcase = async (data: TRunTestcase) => {
+  const problem = (await fetchData(
+    ADMIN_SERVICE_URL,
+    `/api/submissions/problems/run/${data.problem}/${data.language}`,
+  )) as TProblemRun;
+
+  if (!problem) throw new NotFound("Problem Not Found");
+
+  if (problem?.code) {
+    problem.solutionCode = problem.code?.replace(
+      USER_CODE,
+      problem.solutionCode,
+    );
+    problem.code = problem.code?.replace(USER_CODE, data.code);
+  }
+
+  submissionProducer({
+    type: data.type,
+    username: data.username,
+    problemId: problem.id,
+    problemSlug: data.problem,
+    socketKey: data.socketKey,
+    code: problem.code,
+    solutionCode: problem.solutionCode,
+    language: problem.language,
+    testcases: data.testcases,
+    timeLimit: problem.timeLimit,
+    timestamp: data.timestamp,
+  });
 };
 
 const submissionService = {
-  createSubmission,
+  createSubmit,
+  createRunTestcase,
 };
 
 export default submissionService;
