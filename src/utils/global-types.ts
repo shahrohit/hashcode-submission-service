@@ -3,6 +3,7 @@ import { TSubmitProducerJob } from "@schemas/submit-schema";
 
 export type TProblemSubmit = {
   id: number;
+  langId: number;
   language: string;
   code: string;
   testcases: {
@@ -13,6 +14,7 @@ export type TProblemSubmit = {
 };
 export type TProblemRun = {
   id: number;
+  langId: number;
   language: string;
   code: string;
   solutionCode: string;
@@ -23,8 +25,8 @@ export type SubmissionProducer = TSubmitProducerJob | TRunProducerJob;
 
 export type TExecutionStatus =
   | "Accepted"
-  | "Compiled Error"
-  | "Wrong Answer"
+  | "CompiledError"
+  | "WrongAnswer"
   | "Error"
   | "TLE"
   | "RTE";
@@ -33,6 +35,7 @@ export type TSubmitExecutionJob = {
   type: "submit";
   username: string;
   problemId: number;
+  langId: number;
   problemSlug: string;
   socketKey: string | null;
   input?: string;
@@ -49,6 +52,7 @@ export type TRunExecutionJob = {
   type: "run";
   username: string;
   problemId: number;
+  langId: number;
   problemSlug: string;
   socketKey: string | null;
   testcaseCount: number;
@@ -66,3 +70,15 @@ export type TRunExecutionJob = {
 };
 
 export type ExecutionConsumer = TSubmitExecutionJob | TRunExecutionJob;
+
+export type TCreateSubmission = {
+  problemId: number;
+  langId: number;
+  input?: string;
+  output?: string;
+  executionOutput: string;
+  status: TExecutionStatus;
+  timestamp: string;
+  acceptedCount?: number;
+  testcaseCount: number;
+};

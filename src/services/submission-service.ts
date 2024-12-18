@@ -6,6 +6,11 @@ import { TSubmit } from "@schemas/submit-schema";
 import { NotFound } from "@utils/errors";
 import { TProblemRun, TProblemSubmit } from "@utils/global-types";
 import { USER_CODE } from "@utils/constants";
+import submissionRepository from "@/repositories/submission-repository";
+
+const getSubmissions = async (username: string, problemId: number) => {
+  return await submissionRepository.getSubmissions(username, problemId);
+};
 
 const createSubmit = async (data: TSubmit) => {
   const problem = (await fetchData(
@@ -15,13 +20,14 @@ const createSubmit = async (data: TSubmit) => {
   if (!problem) throw new NotFound("Problem Not Found");
 
   if (problem.code) {
-    problem.code = problem.code?.replace(USER_CODE, data.code);
+    problem.code = problem.code.replace(USER_CODE, data.code);
   }
 
   submissionProducer({
     type: data.type,
     username: data.username,
     problemId: problem.id,
+    langId: problem.langId,
     problemSlug: data.problem,
     socketKey: data.socketKey,
     code: problem.code,
@@ -52,6 +58,7 @@ const createRunTestcase = async (data: TRunTestcase) => {
     type: data.type,
     username: data.username,
     problemId: problem.id,
+    langId: problem.langId,
     problemSlug: data.problem,
     socketKey: data.socketKey,
     code: problem.code,
@@ -66,6 +73,7 @@ const createRunTestcase = async (data: TRunTestcase) => {
 const submissionService = {
   createSubmit,
   createRunTestcase,
+  getSubmissions,
 };
 
 export default submissionService;

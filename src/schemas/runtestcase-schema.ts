@@ -24,6 +24,7 @@ export type TRunProducerJob = {
   problemId: number;
   problemSlug: string;
   socketKey: string | null;
+  langId: number;
   language: string;
   code: string;
   solutionCode: string;

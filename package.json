@@ -17,6 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^6.1.0",
     "@types/amqplib": "^0.10.5",
     "amqplib": "^0.10.5",
     "axios": "^1.7.8",

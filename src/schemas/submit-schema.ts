@@ -22,6 +22,7 @@ export type TSubmitProducerJob = {
   type: "submit";
   username: string;
   problemId: number;
+  langId: number;
   problemSlug: string;
   socketKey: string | null;
   language: string;

@@ -9,6 +9,10 @@ import submissionController from "@controller/submission-controller";
 const submissionRouter = express.Router();
 
 submissionRouter
+  .route("/:username/:id")
+  .get(submissionController.getSubmissions);
+
+submissionRouter
   .route("/submit")
   .post(validate(submitSchema), submissionController.createSubmit);
 

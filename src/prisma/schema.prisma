@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Submission{
+  id                Int     @id @default(autoincrement())
+  userId            Int
+  problemId         Int
+  langId            Int
+  input             String?
+  output            String?       
+  executionOutput   String
+  status            Status
+  timestamp         String
+  acceptedCount     Int     @default(0)
+  testcaseCount     Int
+}
+
+enum Status {
+  Accepted
+  CompiledError
+  WrongAnswer
+  Error
+  TLE
+  RTE
+}

@@ -10,6 +10,32 @@ import { TRunTestcase } from "@schemas/runtestcase-schema";
 
 import submissionService from "@services/submission-service";
 import { CREATED } from "@utils/constants";
+import { BadRequest, NotFound } from "@/utils/errors";
+import httpStatusCode from "http-status-codes";
+
+const getSubmissions = async (req: Req, res: Res, next: NextFn) => {
+  try {
+    const username = req.params.username as string | undefined;
+    if (!username) throw new NotFound("User Not Found");
+    if (!req.params.id) throw new NotFound("Problem Not Found");
+    const problemId = +req.params.id;
+    if (isNaN(problemId)) throw new NotFound("Problem Not Found");
+
+    const response = await submissionService.getSubmissions(
+      username,
+      problemId,
+    );
+    console.log(response);
+    res.status(httpStatusCode.OK).json({
+      success: true,
+      message: "GET",
+      statusCode: StatusCodes.OK,
+      data: response,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 const createSubmit = async (req: Req, res: Res, next: NextFn) => {
   try {
@@ -46,6 +72,7 @@ const createRunTestcase = async (req: Req, res: Res, next: NextFn) => {
 };
 
 const submissionController = {
+  getSubmissions,
   createSubmit,
   createRunTestcase,
 };
