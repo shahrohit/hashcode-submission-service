@@ -36,7 +36,6 @@ const createSubmission = async (data: TSubmitExecutionJob) => {
 const pushExecutionResult = async (data: ExecutionConsumer) => {
   try {
     const url = `${WS_SERVICE_URL}/api/${data.type}`;
-    console.log(data);
     await axios.post(url, data);
   } catch (error) {
     if (error instanceof AxiosError) {

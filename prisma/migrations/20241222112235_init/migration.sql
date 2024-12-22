@@ -4,7 +4,7 @@ CREATE TYPE "Status" AS ENUM ('Accepted', 'CompiledError', 'WrongAnswer', 'Error
 -- CreateTable
 CREATE TABLE "Submission" (
     "id" SERIAL NOT NULL,
-    "username" TEXT NOT NULL,
+    "userId" INTEGER NOT NULL,
     "problemId" INTEGER NOT NULL,
     "langId" INTEGER NOT NULL,
     "input" TEXT,

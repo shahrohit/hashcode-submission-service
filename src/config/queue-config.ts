@@ -12,8 +12,12 @@ async function connectQueue() {
     const connection = await amqplib.connect(RABBITMQ_URL);
     channel = await connection.createChannel();
     consumeQueue(channel, EXECUTION_QUEUE, executionWorker);
-  } catch (error) {
-    console.log(error);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    if (error?.code === "ENOTFOUND") {
+      console.log("Error connecting Message Queue ");
+      process.exit();
+    }
   }
 }
 

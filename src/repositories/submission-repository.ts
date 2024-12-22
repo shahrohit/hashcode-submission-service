@@ -1,7 +1,7 @@
 import prisma from "@/config/db-config";
 import { ADMIN_SERVICE_URL, USER_SERVICE_URL } from "@/config/server-config";
 import { NotFound } from "@/utils/errors";
-import { TCreateSubmission } from "@/utils/global-types";
+import { submissionResponse, TCreateSubmission } from "@/utils/global-types";
 import axios from "axios";
 
 const createSubmission = async (username: string, data: TCreateSubmission) => {
@@ -27,9 +27,7 @@ const getSubmissions = async (username: string, problemId: number) => {
   url = `${ADMIN_SERVICE_URL}/api/submissions/languages`;
   const LangResponse = await axios.get(url);
   const languages = LangResponse.data.data;
-  console.log(languages);
 
-  console.log(user);
   const submissions = await prisma.submission.findMany({
     where: {
       userId: user.id,
@@ -40,7 +38,7 @@ const getSubmissions = async (username: string, problemId: number) => {
     },
   });
 
-  const response: any[] = [];
+  const response: submissionResponse[] = [];
   submissions.forEach(submission => {
     response.push({
       ...submission,

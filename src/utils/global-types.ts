@@ -82,3 +82,18 @@ export type TCreateSubmission = {
   acceptedCount?: number;
   testcaseCount: number;
 };
+
+export type submissionResponse = {
+  userId: number;
+  problemId: number;
+  langId: number;
+  input: string | null;
+  output: string | null;
+  executionOutput: string;
+  status: TExecutionStatus;
+  timestamp: string;
+  acceptedCount: number;
+  testcaseCount: number;
+  id: number;
+  language: string;
+};

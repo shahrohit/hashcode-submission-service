@@ -10,7 +10,7 @@ import { TRunTestcase } from "@schemas/runtestcase-schema";
 
 import submissionService from "@services/submission-service";
 import { CREATED } from "@utils/constants";
-import { BadRequest, NotFound } from "@/utils/errors";
+import { NotFound } from "@/utils/errors";
 import httpStatusCode from "http-status-codes";
 
 const getSubmissions = async (req: Req, res: Res, next: NextFn) => {
@@ -25,7 +25,6 @@ const getSubmissions = async (req: Req, res: Res, next: NextFn) => {
       username,
       problemId,
     );
-    console.log(response);
     res.status(httpStatusCode.OK).json({
       success: true,
       message: "GET",
